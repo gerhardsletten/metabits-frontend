@@ -1,6 +1,7 @@
 import React from 'react'
 import styled, {injectGlobal, ThemeProvider} from 'styled-components'
 import FlexContainer from 'react-styled-flexbox'
+import breakpoint from 'styled-components-breakpoint'
 
 import {Link} from '../routes'
 
@@ -39,6 +40,22 @@ const WrapperInner = styled.div`
   background: #fff;
   padding: 1rem;
 `
+const Nav = styled.nav`
+  margin-left: auto;
+  display: none;
+  ${breakpoint('tablet')`
+    display: block;
+  `}
+`
+const NavItem = styled.a`
+  display: inline-block;
+  text-decoration: none;
+  padding: 1rem;
+  color: ${props => props.active ? props.theme.primary : props.theme.text};
+  &:hover {
+    text-decoration: underline;
+  }
+`
 const Header = styled.header`
   display: block;
   margin-bottom: 2rem;
@@ -47,11 +64,12 @@ const LogoWrapper = styled.a`
   max-width: 20rem;
   display: block;
 `
+
 const Logo = styled.img`
   width: 100%;
 `
 
-const App = ({children, navigation, path}) => {
+const AppPlain = ({children, title, navigation, path}) => {
   return (
     <ThemeProvider theme={theme}>
       <Wrapper>
@@ -62,7 +80,21 @@ const App = ({children, navigation, path}) => {
                 <Logo src='/static/logo-metabits.svg' alt='Metabits' />
               </LogoWrapper>
             </Link>
-            {navigation}
+            {navigation && (
+              <Nav>
+                {navigation.map(({title, uri}, i) => {
+                  const route = `/${uri}`
+                  const active = route === path
+                  return (
+                    <Link key={i} route={route}>
+                      <NavItem href={route} active={active}>
+                        {title}
+                      </NavItem>
+                    </Link>
+                  )
+                })}
+              </Nav>
+            )}
           </FlexContainer>
         </Header>
         <WrapperInner>
@@ -73,4 +105,4 @@ const App = ({children, navigation, path}) => {
   )
 }
 
-export default App
+export default AppPlain

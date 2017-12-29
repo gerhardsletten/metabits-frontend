@@ -10,7 +10,6 @@ export default class MyDocument extends Document {
   }
 
   render () {
-    const {navigation} = this.props
     return (
       <html>
         <Head>

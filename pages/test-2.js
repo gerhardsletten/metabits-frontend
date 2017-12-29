@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 
 import withData from '../lib/withData'
-import App from '../components/App'
-import Navigation from '../components/Navigation'
+import AppPlain from '../components/AppPlain'
 import Page from '../components/Page'
 
 class IndexComponent extends Component {
@@ -15,9 +14,10 @@ class IndexComponent extends Component {
   render () {
     const {asPath} = this.props
     return (
-      <App navigation={<Navigation path={asPath} />}>
-        <Page path={asPath} />
-      </App>
+      <AppPlain path={asPath}>
+        <p>test-2 - dataloading Page</p>
+        <Page path='/' />
+      </AppPlain>
     )
   }
 }
