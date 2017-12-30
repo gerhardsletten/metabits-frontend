@@ -1,12 +1,20 @@
 import React from 'react'
 import styled, {injectGlobal, ThemeProvider} from 'styled-components'
 import FlexContainer from 'react-styled-flexbox'
+import {withState} from 'recompose'
 
 import {Link} from '../routes'
+import Icon from '../elements/Icon'
+import Button, {RoundedButton} from '../elements/Button'
+
+const enhance = withState('overlayVisible', 'toggleOverlay', false)
 
 const theme = {
   text: '#232323',
-  primary: 'palevioletred'
+  primary: '#00AEEE',
+  primaryActive: '#0095DA',
+  secondary: '#999',
+  secondaryActive: '#888'
 }
 
 injectGlobal`
@@ -32,7 +40,7 @@ injectGlobal`
 `
 const Wrapper = styled.div`
   margin: 0 auto;
-  max-width: 80rem;
+  max-width: 100rem;
   padding: 1rem;
 `
 const WrapperInner = styled.div`
@@ -51,7 +59,8 @@ const Logo = styled.img`
   width: 100%;
 `
 
-const App = ({children, navigation, path}) => {
+const App = ({children, navigation, path, ...rest}) => {
+  console.log('rest', rest)
   return (
     <ThemeProvider theme={theme}>
       <Wrapper>
@@ -63,9 +72,17 @@ const App = ({children, navigation, path}) => {
               </LogoWrapper>
             </Link>
             {navigation}
+            <Icon icon='bars' />
           </FlexContainer>
         </Header>
         <WrapperInner>
+          <div>
+            <Button link route='/'>Button primary</Button>
+            <Button link active>Button primary</Button>
+            <Button route='/'>Button default</Button>
+            <Button primary onClick={() => console.log('hei')}>Button default</Button>
+            <RoundedButton><Icon icon='bars' /></RoundedButton>
+          </div>
           {children}
         </WrapperInner>
       </Wrapper>
@@ -73,4 +90,4 @@ const App = ({children, navigation, path}) => {
   )
 }
 
-export default App
+export default enhance(App)

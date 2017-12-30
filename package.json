@@ -8,6 +8,10 @@
     "analyze": "cross-env ANALYZE=1 next build"
   },
   "dependencies": {
+    "@fortawesome/fontawesome": "^1.0.1",
+    "@fortawesome/fontawesome-free-brands": "^5.0.2",
+    "@fortawesome/fontawesome-free-solid": "^5.0.2",
+    "@fortawesome/react-fontawesome": "0.0.16",
     "apollo-client-preset": "^1.0.5",
     "babel-plugin-styled-components": "^1.1.5",
     "compression": "^1.7.1",
@@ -26,6 +30,7 @@
     "react-apollo": "^2.0.4",
     "react-dom": "^16.0.0",
     "react-styled-flexbox": "^1.0.4",
+    "recompose": "^0.26.0",
     "styled-components": "^2.1.0",
     "styled-components-breakpoint": "^1.0.1"
   },

@@ -24,14 +24,14 @@ const NavItem = styled.a`
   }
 `
 
-const Navigation = ({navigation, path}) => {
+const Navigation = ({navigation, path, ...props}) => {
   if (!navigation) {
     return null
   }
   return (
     <Nav>
-      {navigation.map(({title, uri}, i) => {
-        const route = `/${uri}`
+      {navigation.map(({title, Page: {id: uri}}, i) => {
+        const route = `${uri}`
         const active = route === path
         return (
           <Link key={i} route={route}>
@@ -46,33 +46,20 @@ const Navigation = ({navigation, path}) => {
 }
 
 const qlQuery = gql`
-  query navigation {
-    navigation: pages(where: {
-      parent:"0"
-      orderby: {
-        field:MENU_ORDER
-        order:ASC
+  {
+    allNavigationItems(filter: { navigation_id:"primary"}) {
+      title
+      Page {
+        id
       }
-    }, first:5){
-        edges{
-          node{
-            title
-            uri
-          }
-        }
-      }
+    }
   }
 `
 
 export default graphql(qlQuery, {
   props: ({data}) => {
     return {
-      navigation: data.navigation && data.navigation.edges.map(({node: {title, uri}}) => {
-        return {
-          title,
-          uri
-        }
-      }).filter(({uri}) => uri !== config.homeSlug)
+      navigation: data.allNavigationItems
     }
   }
 })(Navigation)

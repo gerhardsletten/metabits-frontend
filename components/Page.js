@@ -4,8 +4,6 @@ import styled from 'styled-components'
 import {graphql} from 'react-apollo'
 import gql from 'graphql-tag'
 
-import config from '../config'
-
 const MainTitle = styled.h1`
   margin-bottom: 1rem;
   font-size: 3rem;
@@ -20,7 +18,6 @@ const Content = styled.div`
 `
 
 const Page = ({title, id, content, type}) => {
-  console.log('Page render', title)
   return (
     <div>
       {title && (
@@ -28,15 +25,15 @@ const Page = ({title, id, content, type}) => {
           <title>{title}</title>
         </Head>
       )}
-      <MainTitle>{title} [{type}: {id}]</MainTitle>
+      <MainTitle>{title} [{type}]</MainTitle>
       <Content dangerouslySetInnerHTML={{__html: content}} />
     </div>
   )
 }
 
 const qlQuery = gql`
-  query page ($uri: String!) {
-    page: pageBy (uri: $uri) {
+  query page ($id: ID!) {
+    page: Page (id: $id) {
       title
       id
       content
@@ -49,7 +46,7 @@ export default graphql(qlQuery, {
   options: ({path}) => {
     return {
       variables: {
-        uri: path === '/' ? config.homeSlug : path
+        id: path
       }
     }
   },
