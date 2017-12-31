@@ -2,9 +2,11 @@ import React from 'react'
 import styled from 'styled-components'
 import {Link} from '../routes'
 
+const isActive = (props, hover) => props.active || !!(hover && !!(props.route || props.onClick))
+
 const buttonColor = (props, hover = false) => {
   if (props.link) {
-    if (!!(hover && props.route) || props.active) {
+    if (isActive(props, hover)) {
       return props.theme.primaryActive
     }
     return props.theme.text
@@ -16,13 +18,13 @@ const buttonBackground = (props, hover = false) => {
   if (props.link) {
     return 'none'
   }
-  if (props.primary && hover && !!(props.route || props.onClick)) {
+  if (props.primary && isActive(props, hover)) {
     return props.theme.primaryActive
   }
   if (props.primary) {
     return props.theme.primary
   }
-  if (hover && !!(props.route || props.onClick)) {
+  if (isActive(props, hover)) {
     return props.theme.secondaryActive
   }
   return props.theme.secondary
@@ -32,9 +34,12 @@ const BasicButton = styled.div`
   text-decoration: none;
   text-align: center;
   border: none;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   padding: .75rem 1rem;
   border-radius: 3px;
+  outline: none;
   margin-right: ${props => props.block || props.tight ? 0 : '1rem'};
   margin-bottom: ${props => props.block ? '.5rem' : 0};
   color: ${props => buttonColor(props)};
@@ -72,6 +77,7 @@ export const RoundedButton = styled(Button)`
   padding-left: 0;
   padding-right: 0;
   min-width: 4rem;
+  min-height: 4rem;
 `
 
 export default Button

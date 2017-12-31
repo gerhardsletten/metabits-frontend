@@ -7,6 +7,7 @@ import globe from '@fortawesome/fontawesome-free-solid/faGlobe'
 import cog from '@fortawesome/fontawesome-free-solid/faCog'
 import home from '@fortawesome/fontawesome-free-solid/faHome'
 import bars from '@fortawesome/fontawesome-free-solid/faBars'
+import close from '@fortawesome/fontawesome-free-solid/faTimes'
 
 import wordpress from '@fortawesome/fontawesome-free-brands/faWordpress'
 
@@ -18,7 +19,8 @@ const icons = {
   globe,
   cog,
   home,
-  bars
+  bars,
+  close
 }
 
 const Icon = ({icon}) => {
