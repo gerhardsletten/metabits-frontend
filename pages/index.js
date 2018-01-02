@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import withData from '../lib/withData'
 import App from '../components/App'
-import Page from '../components/Page'
+import HomePage from '../components/HomePage'
 
 class IndexComponent extends Component {
   static async getInitialProps ({isServer, asPath}) {
@@ -15,7 +15,7 @@ class IndexComponent extends Component {
     const {asPath} = this.props
     return (
       <App path={asPath}>
-        <Page path={asPath} />
+        <HomePage path={asPath} />
       </App>
     )
   }

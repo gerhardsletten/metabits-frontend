@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Component} from 'react'
 import styled, {injectGlobal, ThemeProvider} from 'styled-components'
 import breakpoint from 'styled-components-breakpoint'
 // import FlexContainer from 'react-styled-flexbox'
@@ -7,6 +7,7 @@ import {withState} from 'recompose'
 import Navigation from './Navigation'
 import {Link} from '../routes'
 import Icon from '../elements/Icon'
+import OffCanvas from '../elements/OffCanvas'
 import Button, {RoundedButton} from '../elements/Button'
 
 const theme = {
@@ -53,9 +54,12 @@ const Header = styled.header`
   margin-bottom: 2rem;
 `
 const LogoWrapper = styled.a`
-  max-width: 20rem;
+  max-width: 15rem;
   display: block;
   visibility: ${props => props.isHidden ? 'hidden' : 'visible'};
+  ${breakpoint('desktop')`
+    max-width: 20rem;
+  `}
 `
 const Logo = styled.img`
   width: 100%;
@@ -67,13 +71,13 @@ const NavWrapper = styled.nav`
 `
 const NavDesktop = styled.div`
   display: none;
-  ${breakpoint('tablet')`
+  ${breakpoint('desktop')`
     display: block;
   `}
 `
 const NavBtnMobile = styled.div`
   display: block;
-  ${breakpoint('tablet')`
+  ${breakpoint('desktop')`
     display: none;
   `}
 `
@@ -81,30 +85,7 @@ const HeaderWrapper = styled.div`
   display: flex;
   align-items: center;
 `
-const Canvas = styled.div`
-  background: rgba(100%,100%,100%,.9);
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  transform: ${props => props.active ? 'translate(0%, 0px)' : 'translate(0%, 20%) scale(.8)'};
-  opacity: ${props => props.active ? 1 : 0};
-  transition: transform 200ms;
-  backface-visibility: ${props => props.active ? 'visible' : 'hidden'};
-  z-index: ${props => props.active ? 150 : -1000};
-`
-const CanvasInner = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  flex-direction: column;
-  padding: 1rem;
-`
-const CanvasContent = styled.div`
+const NavMobile = styled.nav`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -115,66 +96,102 @@ const CanvasContent = styled.div`
 
 const enhance = withState('overlayVisible', 'toggleOverlay', false)
 
-const App = ({children, path, overlayVisible, toggleOverlay}) => {
-  const toggleAction = () => toggleOverlay(!overlayVisible)
-  const toggleBtn = (
-    <RoundedButton primary onClick={toggleAction} active={overlayVisible}><Icon icon={overlayVisible ? 'close' : 'bars'} /></RoundedButton>
-  )
-  return (
-    <ThemeProvider theme={theme}>
-      <Wrapper>
+export default class App extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      overlayVisible: false
+    }
+  }
+  toggleBtn (icon = 'bars') {
+    return (
+      <RoundedButton tight primary onClick={this.toggleOverlay} active={this.state.overlayVisible}><Icon icon={icon} /></RoundedButton>
+    )
+  }
+  componentWillReceiveProps (nextProps) {
+    if (this.props.path !== nextProps.path) {
+      this.setState({
+        overlayVisible: false
+      })
+    }
+  }
+  render () {
+    const {children, path} = this.props
+    return (
+      <ThemeProvider theme={theme}>
+        <Wrapper>
+          <Header>
+            <HeaderWrapper>
+              <Link route={'/'}>
+                <LogoWrapper href='/'>
+                  <Logo src='/static/logo-metabits.svg' alt='Metabits' />
+                </LogoWrapper>
+              </Link>
+              <NavWrapper>
+                <Navigation path={path}>
+                  {({navigation}) => {
+                    return (
+                      <NavDesktop>
+                        {navigation && navigation.map(({title, uri, active}, i) => {
+                          return (
+                            <Button link key={i} route={uri} active={active}>{title}</Button>
+                          )
+                        })}
+                      </NavDesktop>
+                    )
+                  }}
+                </Navigation>
+                <NavBtnMobile>
+                  {this.toggleBtn()}
+                </NavBtnMobile>
+              </NavWrapper>
+            </HeaderWrapper>
+          </Header>
+          <WrapperInner>
+            {children}
+          </WrapperInner>
+          {this.renderOverlay()}
+        </Wrapper>
+      </ThemeProvider>
+    )
+  }
+  renderOverlay () {
+    const {path} = this.props
+    return (
+      <OffCanvas visible={this.state.overlayVisible}>
         <Header>
           <HeaderWrapper>
             <Link route={'/'}>
-              <LogoWrapper href='/'>
+              <LogoWrapper href='/' isHidden>
                 <Logo src='/static/logo-metabits.svg' alt='Metabits' />
               </LogoWrapper>
             </Link>
             <NavWrapper>
-              <Navigation path={path}>
-                {({navigation}) => {
-                  return (
-                    <NavDesktop>
-                      {navigation && navigation.map(({title, uri, active}, i) => {
-                        return (
-                          <Button link key={i} route={uri} active={active}>{title}</Button>
-                        )
-                      })}
-                    </NavDesktop>
-                  )
-                }}
-              </Navigation>
-              <NavBtnMobile>
-                {toggleBtn}
-              </NavBtnMobile>
+              {this.toggleBtn('close')}
             </NavWrapper>
           </HeaderWrapper>
         </Header>
-        <WrapperInner>
-          {children}
-        </WrapperInner>
-        <Canvas active={overlayVisible}>
-          <CanvasInner>
-            <Header>
-              <HeaderWrapper>
-                <Link route={'/'}>
-                  <LogoWrapper href='/' isHidden>
-                    <Logo src='/static/logo-metabits.svg' alt='Metabits' />
-                  </LogoWrapper>
-                </Link>
-                <NavWrapper>
-                  {toggleBtn}
-                </NavWrapper>
-              </HeaderWrapper>
-            </Header>
-            <CanvasContent>
-              <p>Hei verden</p>
-            </CanvasContent>
-          </CanvasInner>
-        </Canvas>
-      </Wrapper>
-    </ThemeProvider>
-  )
+        <NavMobile>
+          <Navigation path={path}>
+            {({navigation}) => {
+              return (
+                <div>
+                  {navigation && navigation.map(({title, uri, active}, i) => {
+                    return (
+                      <Button block link key={i} route={uri} active={active}>{title}</Button>
+                    )
+                  })}
+                </div>
+              )
+            }}
+          </Navigation>
+        </NavMobile>
+      </OffCanvas>
+    )
+  }
+  toggleOverlay = () => {
+    this.setState({
+      overlayVisible: !this.state.overlayVisible
+    })
+  }
 }
-
-export default enhance(App)

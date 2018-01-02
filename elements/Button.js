@@ -34,7 +34,7 @@ const BasicButton = styled.div`
   text-decoration: none;
   text-align: center;
   border: none;
-  display: inline-flex;
+  display: ${props => props.block ? 'flex' : 'inline-flex'};
   align-items: center;
   justify-content: center;
   padding: .75rem 1rem;
