@@ -9,13 +9,16 @@ import {Link} from '../routes'
 import Icon from '../elements/Icon'
 import OffCanvas from '../elements/OffCanvas'
 import Button, {RoundedButton} from '../elements/Button'
+import Wrapper from '../elements/Wrapper'
 
 const theme = {
   text: '#232323',
   primary: '#00AEEE',
   primaryActive: '#0095DA',
-  secondary: '#999',
-  secondaryActive: '#888'
+  secondary: '#FF931E',
+  secondaryActive: '#D47A19',
+  textMuted: '#999',
+  shadow: '0 0 6px rgba(0,0,0,.3)'
 }
 
 injectGlobal`
@@ -40,18 +43,25 @@ injectGlobal`
     font-size: 1.8rem;
   }
 `
-const Wrapper = styled.div`
-  margin: 0 auto;
-  max-width: 100rem;
-  padding: 1rem;
+const Main = styled.div`
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  flex-direction: column;
 `
-const WrapperInner = styled.div`
-  background: #fff;
-  padding: 1rem;
+const Content = styled.main`
+  padding-bottom: 2rem;
+  flex: 1;
+  z-index: 1;
 `
 const Header = styled.header`
   display: block;
-  margin-bottom: 2rem;
+  padding: 2rem 0;
+`
+const Footer = styled.footer`
+  display: block;
+  padding: 2rem 0;
+  text-align: center;
 `
 const LogoWrapper = styled.a`
   max-width: 15rem;
@@ -63,6 +73,7 @@ const LogoWrapper = styled.a`
 `
 const Logo = styled.img`
   width: 100%;
+  display: block;
 `
 const NavWrapper = styled.nav`
   margin-left: auto;
@@ -115,44 +126,68 @@ export default class App extends Component {
       })
     }
   }
+  renderContent () {
+    const {inset = true, children} = this.props
+    if (!inset) {
+      return children
+    }
+    return (
+      <Wrapper>
+        {children}
+      </Wrapper>
+    )
+  }
   render () {
-    const {children, path} = this.props
+    const {children, path, inset = true} = this.props
     return (
       <ThemeProvider theme={theme}>
-        <Wrapper>
-          <Header>
-            <HeaderWrapper>
-              <Link route={'/'}>
-                <LogoWrapper href='/'>
-                  <Logo src='/static/logo-metabits.svg' alt='Metabits' />
-                </LogoWrapper>
-              </Link>
-              <NavWrapper>
-                <Navigation path={path}>
-                  {({navigation}) => {
-                    return (
-                      <NavDesktop>
-                        {navigation && navigation.map(({title, uri, active}, i) => {
-                          return (
-                            <Button link key={i} route={uri} active={active}>{title}</Button>
-                          )
-                        })}
-                      </NavDesktop>
-                    )
-                  }}
-                </Navigation>
-                <NavBtnMobile>
-                  {this.toggleBtn()}
-                </NavBtnMobile>
-              </NavWrapper>
-            </HeaderWrapper>
-          </Header>
-          <WrapperInner>
-            {children}
-          </WrapperInner>
+        <Main>
+          {this.renderHeader()}
+          <Content>
+            {this.renderContent()}
+          </Content>
+          <Footer>
+            <Wrapper>
+              <p>Footer as</p>
+            </Wrapper>
+          </Footer>
           {this.renderOverlay()}
-        </Wrapper>
+        </Main>
       </ThemeProvider>
+    )
+  }
+  renderHeader () {
+    const {path} = this.props
+    return (
+      <Header>
+        <Wrapper>
+          <HeaderWrapper>
+            <Link route={'/'}>
+              <LogoWrapper href='/'>
+                <Logo src='/static/logo-metabits.svg' alt='Metabits' />
+              </LogoWrapper>
+            </Link>
+            <NavWrapper>
+              <Navigation path={path}>
+                {({navigation}) => {
+                  return (
+                    <NavDesktop>
+                      {navigation && navigation.map(({title, uri, active}, i) => {
+                        return (
+                          <Button link key={i} route={uri} active={active}>{title}</Button>
+                        )
+                      })}
+                    </NavDesktop>
+                  )
+                }}
+              </Navigation>
+              <NavBtnMobile>
+                {this.toggleBtn()}
+              </NavBtnMobile>
+            </NavWrapper>
+          </HeaderWrapper>
+        </Wrapper>
+      </Header>
     )
   }
   renderOverlay () {
@@ -160,16 +195,18 @@ export default class App extends Component {
     return (
       <OffCanvas visible={this.state.overlayVisible}>
         <Header>
-          <HeaderWrapper>
-            <Link route={'/'}>
-              <LogoWrapper href='/' isHidden>
-                <Logo src='/static/logo-metabits.svg' alt='Metabits' />
-              </LogoWrapper>
-            </Link>
-            <NavWrapper>
-              {this.toggleBtn('close')}
-            </NavWrapper>
-          </HeaderWrapper>
+          <Wrapper>
+            <HeaderWrapper>
+              <Link route={'/'}>
+                <LogoWrapper href='/' isHidden>
+                  <Logo src='/static/logo-metabits.svg' alt='Metabits' />
+                </LogoWrapper>
+              </Link>
+              <NavWrapper>
+                {this.toggleBtn('close')}
+              </NavWrapper>
+            </HeaderWrapper>
+          </Wrapper>
         </Header>
         <NavMobile>
           <Navigation path={path}>

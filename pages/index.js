@@ -14,7 +14,7 @@ class IndexComponent extends Component {
   render () {
     const {asPath} = this.props
     return (
-      <App path={asPath}>
+      <App path={asPath} inset={false}>
         <HomePage path={asPath} />
       </App>
     )

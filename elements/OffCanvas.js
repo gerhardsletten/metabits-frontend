@@ -22,7 +22,6 @@ const CanvasInner = styled.div`
   bottom: 0;
   display: flex;
   flex-direction: column;
-  padding: 1rem;
 `
 
 export default class OffCanvas extends Component {

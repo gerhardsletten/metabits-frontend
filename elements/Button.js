@@ -40,6 +40,7 @@ const BasicButton = styled.div`
   padding: .75rem 1rem;
   border-radius: 3px;
   outline: none;
+  box-shadow: ${props => props.shadow ? props.theme.shadow : 'none'};
   margin-right: ${props => props.block || props.tight ? 0 : '1rem'};
   margin-bottom: ${props => props.block ? '.5rem' : 0};
   color: ${props => buttonColor(props)};

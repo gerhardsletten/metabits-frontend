@@ -4,9 +4,10 @@ import styled from 'styled-components'
 import {graphql} from 'react-apollo'
 import gql from 'graphql-tag'
 
-import {PageBanner} from '../fragments'
+import PageBanner, {fragment} from '../elements/PageBanner'
+import Wrapper from '../elements/Wrapper'
 
-const HomePage = ({title, ...rest}) => {
+const HomePage = ({title, Banner, ...rest}) => {
   console.log('props', rest)
   return (
     <div>
@@ -15,7 +16,10 @@ const HomePage = ({title, ...rest}) => {
           <title>{title}</title>
         </Head>
       )}
-      <h1>{title}</h1>
+      {Banner && <PageBanner {...Banner} />}
+      <Wrapper>
+        <p>Etter</p>
+      </Wrapper>
     </div>
   )
 }
@@ -37,7 +41,7 @@ const qlQuery = gql`
       icon
     }
   }
-  ${PageBanner}
+  ${fragment}
 `
 
 export default graphql(qlQuery, {
