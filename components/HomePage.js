@@ -8,7 +8,7 @@ import PageBanner, {fragment} from '../elements/PageBanner'
 import Wrapper from '../elements/Wrapper'
 
 const HomePage = ({title, Banner, ...rest}) => {
-  console.log('props', rest)
+  // console.log('props', rest)
   return (
     <div>
       {title && (

@@ -4,17 +4,12 @@ import styled from 'styled-components'
 import {graphql} from 'react-apollo'
 import gql from 'graphql-tag'
 
+import Content from '../elements/Content'
+
 const MainTitle = styled.h1`
   margin-bottom: 1rem;
   font-size: 3rem;
   font-weight: bold;
-`
-
-const Content = styled.div`
-  margin-bottom: 1rem;
-  p {
-    margin-bottom: 1rem;
-  }
 `
 
 const Page = ({title, id, content, type}) => {
@@ -26,7 +21,7 @@ const Page = ({title, id, content, type}) => {
         </Head>
       )}
       <MainTitle>{title} [{type}]</MainTitle>
-      <Content dangerouslySetInnerHTML={{__html: content}} />
+      <Content md={content} />
     </div>
   )
 }

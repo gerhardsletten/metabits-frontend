@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
 import styled, {injectGlobal, ThemeProvider} from 'styled-components'
 import breakpoint from 'styled-components-breakpoint'
-// import FlexContainer from 'react-styled-flexbox'
-import {withState} from 'recompose'
+import {graphql, compose} from 'react-apollo'
+import gql from 'graphql-tag'
 
 import Navigation from './Navigation'
 import {Link} from '../routes'
@@ -105,25 +105,30 @@ const NavMobile = styled.nav`
   padding: 1rem;
 `
 
-const enhance = withState('overlayVisible', 'toggleOverlay', false)
-
-export default class App extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      overlayVisible: false
-    }
-  }
+class App extends Component {
   toggleBtn (icon = 'bars') {
+    const {menuVisible} = this.props
     return (
-      <RoundedButton tight primary onClick={this.toggleOverlay} active={this.state.overlayVisible}><Icon icon={icon} /></RoundedButton>
+      <RoundedButton tight primary onClick={this.toggleMenu} active={menuVisible}><Icon icon={icon} /></RoundedButton>
     )
   }
+  toggleMenu = () => {
+    const {menuVisible, toggleMenu} = this.props
+    toggleMenu(!menuVisible)
+  }
+  toggleDropdown = () => {
+    const {dropdownVisible, toggleDropdown} = this.props
+    toggleDropdown(!dropdownVisible)
+  }
+  componentWillMount (props) {
+    const {menuVisible, toggleMenu} = this.props
+    if (menuVisible) {
+      toggleMenu(false)
+    }
+  }
   componentWillReceiveProps (nextProps) {
-    if (this.props.path !== nextProps.path) {
-      this.setState({
-        overlayVisible: false
-      })
+    if (this.props.path !== nextProps.path && nextProps.menuVisible) {
+      nextProps.toggleMenu(false)
     }
   }
   renderContent () {
@@ -138,7 +143,7 @@ export default class App extends Component {
     )
   }
   render () {
-    const {children, path, inset = true} = this.props
+    const {dropdownVisible} = this.props
     return (
       <ThemeProvider theme={theme}>
         <Main>
@@ -149,6 +154,9 @@ export default class App extends Component {
           <Footer>
             <Wrapper>
               <p>Footer as</p>
+              <Button link onClick={this.toggleDropdown}>
+                Dropdown {dropdownVisible ? 'visible' : 'hidden'}
+              </Button>
             </Wrapper>
           </Footer>
           {this.renderOverlay()}
@@ -191,9 +199,9 @@ export default class App extends Component {
     )
   }
   renderOverlay () {
-    const {path} = this.props
+    const {path, menuVisible} = this.props
     return (
-      <OffCanvas visible={this.state.overlayVisible}>
+      <OffCanvas visible={menuVisible}>
         <Header>
           <Wrapper>
             <HeaderWrapper>
@@ -226,9 +234,49 @@ export default class App extends Component {
       </OffCanvas>
     )
   }
-  toggleOverlay = () => {
-    this.setState({
-      overlayVisible: !this.state.overlayVisible
-    })
-  }
 }
+
+const menuMutation = gql`
+  mutation updateMenuStatus($menuVisible: Boolean) {
+    updateMenuStatus(menuVisible: $menuVisible) @client
+  }
+`
+
+const dropdownMutation = gql`
+  mutation updateDropdownToggle($dropdownVisible: Boolean) {
+    updateDropdownToggle(dropdownVisible: $dropdownVisible) @client
+  }
+`
+
+const qlQuery = gql`
+  query {
+    uiState @client {
+      menuVisible
+      dropdownVisible
+    }
+  }
+`
+
+export default compose(
+  graphql(qlQuery, {
+    props: ({ data: {uiState} }) => {
+      return {
+        ...uiState
+      }
+    }
+  }),
+  graphql(menuMutation, {
+    props: ({ mutate }) => {
+      return {
+        toggleMenu: menuVisible => mutate({ variables: { menuVisible } })
+      }
+    }
+  }),
+  graphql(dropdownMutation, {
+    props: ({ mutate }) => {
+      return {
+        toggleDropdown: dropdownVisible => mutate({ variables: { dropdownVisible } })
+      }
+    }
+  })
+)(App)

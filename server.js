@@ -11,6 +11,7 @@ const app = next({ dev })
 const handler = routes.getRequestHandler(app)
 
 const server = express()
+server.use(compression())
 server.use('/graphql', proxy({
   target: config.wpApi,
   changeOrigin: true,
@@ -19,7 +20,6 @@ server.use('/graphql', proxy({
 app.prepare()
 .then(() => {
   server.use(handler)
-  server.use(compression())
   server.listen(port, (err) => {
     if (err) throw err
     console.log(`> Ready on http://localhost:${port}`)

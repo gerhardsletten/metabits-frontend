@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
+import dynamic from 'next/dynamic'
 
 import withData from '../lib/withData'
 import App from '../components/App'
-import HomePage from '../components/HomePage'
+// import Page from '../components/Page'
+
+const Page = dynamic(import('../components/Page'))
 
 class IndexComponent extends Component {
   static async getInitialProps ({isServer, asPath}) {
@@ -14,8 +17,8 @@ class IndexComponent extends Component {
   render () {
     const {asPath} = this.props
     return (
-      <App path={asPath} inset={false}>
-        <HomePage path={asPath} />
+      <App path={asPath}>
+        <Page path={asPath} />
       </App>
     )
   }
