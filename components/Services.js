@@ -4,22 +4,19 @@ import {graphql} from 'react-apollo'
 import gql from 'graphql-tag'
 
 import MetaFields, {fragment as metaFragment} from '../elements/MetaFields'
-import PageBanner, {fragment as bannerFragment} from '../elements/PageBanner'
 import Feature, {fragment as featureFragment} from '../elements/Feature'
 import Wrapper from '../elements/Wrapper'
 import Title from '../elements/Title'
 
-const HomePage = ({title, Banner, services, MetaField}) => {
+const Services = ({title, subTitle, services, MetaField, ...props}) => {
   return (
     <div>
       <MetaFields title={title} MetaField={MetaField} />
-      {Banner && <PageBanner {...Banner} />}
       <Wrapper>
+        <Title level={1} center mt={1}>{title}</Title>
+        <Title level={2} center mt={1} mb={4} thin color='gray'>{subTitle}</Title>
         {services && (
           <Row>
-            <Col xs={12}>
-              <Title level={2} center mt={1}>Våre tjenester</Title>
-            </Col>
             {services.map((item, i) => {
               return (
                 <Col key={i} xs={6} sm={6} md={4}>
@@ -38,14 +35,13 @@ const qlQuery = gql`
   query page ($id: ID!) {
     page: Page (id: $id) {
       title
+      subTitle
       ...MetaFields
-      ...PageBanner
     }
     services: allPages(filter: {type: "service"}) {
       ...Feature
     }
   }
-  ${bannerFragment}
   ${featureFragment}
   ${metaFragment}
 `
@@ -64,4 +60,4 @@ export default graphql(qlQuery, {
       services
     }
   }
-})(HomePage)
+})(Services)

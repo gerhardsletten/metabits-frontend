@@ -5,7 +5,19 @@
     "dev": "node server.js",
     "build": "next build",
     "start": "NODE_ENV=production node server.js",
-    "analyze": "cross-env ANALYZE=1 next build"
+    "analyze": "cross-env ANALYZE=1 next build",
+    "lint": "eslint -c .eslintrc components/App.js"
+  },
+  "standard": {
+    "parser": "babel-eslint",
+    "globals": [
+      "__DEVELOPMENT__",
+      "webpackIsomorphicTools",
+      "__DISABLE_SSR__",
+      "__DEVTOOLS__",
+      "__CLIENT__",
+      "__SERVER__"
+    ]
   },
   "dependencies": {
     "@fortawesome/fontawesome": "^1.0.1",
@@ -23,7 +35,6 @@
     "graphql-tag": "^2.6.1",
     "http-proxy-middleware": "^0.17.4",
     "isomorphic-unfetch": "^2.0.0",
-    "json-graphql-server": "^1.0.1",
     "next": "latest",
     "next-routes": "^1.2.0",
     "prop-types": "^15.6.0",
@@ -31,13 +42,22 @@
     "react-apollo": "^2.0.4",
     "react-dom": "^16.0.0",
     "react-markdown": "^3.1.4",
-    "react-styled-flexbox": "^1.0.4",
-    "recompose": "^0.26.0",
+    "react-styled-flexboxgrid": "^2.1.1",
     "styled-components": "^2.1.0",
     "styled-components-breakpoint": "^1.0.1"
   },
   "license": "ISC",
   "devDependencies": {
+    "babel-eslint": "^8.1.2",
+    "eslint": "^4.15.0",
+    "eslint-config-standard": "^11.0.0-beta.0",
+    "eslint-config-standard-react": "^5.0.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^5.2.1",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-react": "^7.5.1",
+    "eslint-plugin-standard": "^3.0.1",
+    "standard": "^10.0.3",
     "webpack-bundle-analyzer": "^2.9.1"
   }
 }

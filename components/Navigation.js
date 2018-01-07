@@ -21,7 +21,7 @@ export default graphql(qlQuery, {
     return {
       navigation: data.allNavigationItems && data.allNavigationItems.map(({title, Page: {id: uri}}) => {
         const route = `${uri}`
-        const active = route === path
+        const active = route === '/' ? route === path : path.startsWith(route)
         return {
           title,
           uri,

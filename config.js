@@ -1,3 +1,4 @@
 module.exports = {
-  wpApi: process.env.WP_API || 'http://localhost:3310'
+  wpApi: process.env.DB_API || 'http://localhost:3310',
+  servicePath : process.env.SERVICE_PATH || '/tjenester',
 }

@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import {Link} from '../routes'
+import Element from './Element'
 
 const isActive = (props, hover) => props.active || !!(hover && !!(props.route || props.onClick))
 
@@ -30,19 +31,16 @@ const buttonBackground = (props, hover = false) => {
   return props.theme.secondary
 }
 
-const BasicButton = styled.div`
+const BasicButton = Element.withComponent('button').extend`
   text-decoration: none;
   text-align: center;
   border: none;
   display: ${props => props.block ? 'flex' : 'inline-flex'};
   align-items: center;
   justify-content: center;
-  padding: .75rem 1rem;
   border-radius: 3px;
   outline: none;
   box-shadow: ${props => props.shadow ? props.theme.shadow : 'none'};
-  margin-right: ${props => props.block || props.tight ? 0 : '1rem'};
-  margin-bottom: ${props => props.block ? '.5rem' : 0};
   color: ${props => buttonColor(props)};
   background-color: ${props => buttonBackground(props)};
   &:hover {
@@ -52,10 +50,16 @@ const BasicButton = styled.div`
     background-color: ${props => buttonBackground(props, true)};
   }
 `
-const ActionButton = BasicButton.withComponent('button')
-const LinkButton = BasicButton.withComponent('a')
+const ActionButton = BasicButton.withComponent('button').extend`
+  cursor: pointer;
+`
+const LinkButton = ActionButton.withComponent('a')
 
-const Button = (props) => {
+const Button = (rawProps) => {
+  const props = {
+    pt: .75, pb: .75, pl: 1, pr: 1,
+    ...rawProps
+  }
   if (props.onClick) {
     return (
       <ActionButton type={props.type || 'submit'} {...props} />

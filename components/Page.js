@@ -1,9 +1,9 @@
 import React from 'react'
-import Head from 'next/head'
 import styled from 'styled-components'
 import {graphql} from 'react-apollo'
 import gql from 'graphql-tag'
 
+import MetaFields, {fragment as metaFragment} from '../elements/MetaFields'
 import Content from '../elements/Content'
 
 const MainTitle = styled.h1`
@@ -12,14 +12,10 @@ const MainTitle = styled.h1`
   font-weight: bold;
 `
 
-const Page = ({title, id, content, type}) => {
+const Page = ({title, id, content, type, MetaField}) => {
   return (
     <div>
-      {title && (
-        <Head>
-          <title>{title}</title>
-        </Head>
-      )}
+      <MetaFields title={title} MetaField={MetaField} />
       <MainTitle>{title} [{type}]</MainTitle>
       <Content md={content} />
     </div>
@@ -33,8 +29,10 @@ const qlQuery = gql`
       id
       content
       type
+      ...MetaFields
     }
   }
+  ${metaFragment}
 `
 
 export default graphql(qlQuery, {

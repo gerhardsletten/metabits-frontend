@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import gql from 'graphql-tag'
+import breakpoint from 'styled-components-breakpoint'
 
 import Wrapper from './Wrapper'
 import Button from './Button'
@@ -23,8 +24,12 @@ const Banner = styled.div`
   background-size: cover;
   background-position: 50% 50%;
   text-align: center;
-  padding: 16rem 0;
+  padding: 8rem 0;
   margin-bottom: 2rem;
+  ${breakpoint('desktop')`
+    padding-top: 16rem;
+    padding-bottom: 16rem;
+  `}
 `
 const Title = styled.h1`
   font-size: 4rem;
@@ -32,6 +37,7 @@ const Title = styled.h1`
   color: #fff;
   text-shadow: 0 0 6px rgba(0,0,0,.5);
   margin-bottom: .5rem;
+  line-height: 1.2;
 `
 const Subtitle = Title.withComponent('h2').extend`
   font-size: 2.0rem;
