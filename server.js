@@ -14,8 +14,7 @@ const server = express()
 server.use(compression())
 server.use('/graphql', proxy({
   target: config.wpApi,
-  changeOrigin: true,
-  logLevel: 'debug'
+  changeOrigin: true
 }))
 app.prepare()
 .then(() => {

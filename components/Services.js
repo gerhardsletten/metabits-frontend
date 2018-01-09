@@ -5,28 +5,29 @@ import gql from 'graphql-tag'
 
 import MetaFields, {fragment as metaFragment} from '../elements/MetaFields'
 import Feature, {fragment as featureFragment} from '../elements/Feature'
-import Wrapper from '../elements/Wrapper'
 import Title from '../elements/Title'
 
-const Services = ({title, subTitle, services, MetaField, ...props}) => {
+const Services = ({title, subTitle, services, MetaField}) => {
   return (
     <div>
       <MetaFields title={title} MetaField={MetaField} />
-      <Wrapper>
-        <Title level={1} center mt={1}>{title}</Title>
-        <Title level={2} center mt={1} mb={4} thin color='gray'>{subTitle}</Title>
-        {services && (
-          <Row>
-            {services.map((item, i) => {
-              return (
-                <Col key={i} xs={6} sm={6} md={4}>
-                  <Feature {...item} />
-                </Col>
-              )
-            })}
-          </Row>
-        )}
-      </Wrapper>
+      <Row>
+        <Col mdOffset={2} md={8} xs={12}>
+          <Title level={1} center mt={1}>{title}</Title>
+          <Title level={2} center mt={1} mb={4} thin color='gray'>{subTitle}</Title>
+        </Col>
+      </Row>
+      {services && (
+        <Row>
+          {services.map((item, i) => {
+            return (
+              <Col key={i} xs={6} sm={6} md={4}>
+                <Feature {...item} />
+              </Col>
+            )
+          })}
+        </Row>
+      )}
     </div>
   )
 }
@@ -34,6 +35,7 @@ const Services = ({title, subTitle, services, MetaField, ...props}) => {
 const qlQuery = gql`
   query page ($id: ID!) {
     page: Page (id: $id) {
+      id
       title
       subTitle
       ...MetaFields

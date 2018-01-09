@@ -3,14 +3,14 @@ import styled from 'styled-components'
 import {Link} from '../routes'
 import Element from './Element'
 
-const isActive = (props, hover) => props.active || !!(hover && !!(props.route || props.onClick))
+const isActive = (props, hover) => props.active || !!(hover && !!(props.to || props.onClick))
 
 const buttonColor = (props, hover = false) => {
   if (props.link) {
     if (isActive(props, hover)) {
-      return props.theme.primaryActive
+      return props.theme.colors.primaryActive
     }
-    return props.theme.text
+    return props.theme.colors.text
   }
   return '#fff'
 }
@@ -20,15 +20,15 @@ const buttonBackground = (props, hover = false) => {
     return 'none'
   }
   if (props.primary && isActive(props, hover)) {
-    return props.theme.primaryActive
+    return props.theme.colors.primaryActive
   }
   if (props.primary) {
-    return props.theme.primary
+    return props.theme.colors.primary
   }
   if (isActive(props, hover)) {
-    return props.theme.secondaryActive
+    return props.theme.colors.secondaryActive
   }
-  return props.theme.secondary
+  return props.theme.colors.secondary
 }
 
 const BasicButton = Element.withComponent('button').extend`
@@ -44,8 +44,8 @@ const BasicButton = Element.withComponent('button').extend`
   color: ${props => buttonColor(props)};
   background-color: ${props => buttonBackground(props)};
   &:hover {
-    text-decoration: ${props => props.link && props.route ? 'underline' : 'none'};
-    cursor: ${props => props.route || props.onClick ? 'pointer' : 'default'};
+    text-decoration: ${props => props.link && props.to ? 'underline' : 'none'};
+    cursor: ${props => props.to || props.onClick ? 'pointer' : 'default'};
     color: ${props => buttonColor(props, true)};
     background-color: ${props => buttonBackground(props, true)};
   }
@@ -65,10 +65,10 @@ const Button = (rawProps) => {
       <ActionButton type={props.type || 'submit'} {...props} />
     )
   }
-  if (props.route) {
+  if (props.to) {
     return (
-      <Link route={props.route}>
-        <LinkButton href={props.route} {...props} />
+      <Link route={props.to}>
+        <LinkButton href={props.to} {...props} />
       </Link>
     )
   }

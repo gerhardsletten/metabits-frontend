@@ -21,7 +21,7 @@ const BoxWrapper = styled(Link)`
   text-align: center;
   text-decoration: none;
   transition: transform 200ms;
-  color: ${props => props.theme.textMuted};
+  color: ${props => props.theme.colors.textMuted};
   &:hover,
   &:active {
     transform: scale(1.05);
@@ -31,14 +31,14 @@ const IconWrapper = styled.div`
   display:block;
   margin-bottom: 1rem;
   font-size: 4rem;
-  color: ${props => props.theme.primary}
+  color: ${props => props.theme.colors.primary}
 `
 const Title = styled.h2`
   display:block;
   margin-bottom: .5rem;
   font-size: 2rem;
   font-weight: bold;
-  color: ${props => props.theme.text}
+  color: ${props => props.theme.colors.text}
 `
 
 const Feature = ({id, title, subTitle, icon}) => {

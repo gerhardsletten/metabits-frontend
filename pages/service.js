@@ -3,9 +3,9 @@ import dynamic from 'next/dynamic'
 
 import withData from '../lib/withData'
 import App from '../components/App'
-const Page = dynamic(import('../components/Page'))
+const Service = dynamic(import('../components/Service'))
 
-class IndexComponent extends Component {
+class ServiceComponent extends Component {
   static async getInitialProps ({isServer, asPath}) {
     return {
       isServer,
@@ -16,11 +16,10 @@ class IndexComponent extends Component {
     const {asPath} = this.props
     return (
       <App path={asPath}>
-        <p>Single service</p>
-        <Page path={asPath} />
+        <Service path={asPath} />
       </App>
     )
   }
 }
 
-export default withData(IndexComponent)
+export default withData(ServiceComponent)

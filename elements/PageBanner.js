@@ -51,7 +51,7 @@ const PageBanner = ({title, lead, image, linkText, uri}) => {
       <Wrapper>
         <Title>{title}</Title>
         <Subtitle>{lead}</Subtitle>
-        {linkText && uri && <Button shadow route={uri}>{linkText}</Button>}
+        {linkText && uri && <Button shadow to={uri}>{linkText}</Button>}
       </Wrapper>
     </Banner>
   )

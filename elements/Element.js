@@ -10,6 +10,8 @@ const Element = styled.div`
   ${props => props.pl ? `padding-left: ${props.pl}rem;` : ''}
   ${props => props.pr ? `padding-right: ${props.pr}rem;` : ''}
   ${props => props.size ? `font-size: ${props.theme.sizes[props.size]}rem;` : ''}
+  ${props => props.color ? `color: ${props.theme.colors[props.color]};` : ''}
+  ${props => props.bg ? `background-color: ${props.theme.colors[props.bg]};` : ''}
   ${props => props.center ? `text-align: center;` : ''}
 `
 

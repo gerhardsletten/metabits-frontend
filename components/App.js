@@ -12,12 +12,6 @@ import Button, {RoundedButton} from '../elements/Button'
 import Wrapper from '../elements/Wrapper'
 
 const theme = {
-  text: '#232323',
-  primary: '#00AEEE',
-  primaryActive: '#0095DA',
-  secondary: '#FF931E',
-  secondaryActive: '#D47A19',
-  textMuted: '#999',
   shadow: '0 0 6px rgba(0,0,0,.3)',
   sizes: {
     normal: 1.8,
@@ -26,7 +20,14 @@ const theme = {
   },
   colors: {
     gray: '#999',
-    text: '#232323'
+    text: '#232323',
+    primary: '#00AEEE',
+    primaryActive: '#0095DA',
+    secondary: '#FF931E',
+    secondaryActive: '#D47A19',
+    textMuted: '#999',
+    white: '#fff',
+    lightGray: '#f2f2f2'
   }
 }
 
@@ -47,8 +48,8 @@ injectGlobal`
     margin: 0;
     padding: 0;
     min-height: 100vh;
-    background: #f2f2f2;
-    color: #232323;
+    background: ${props => props.theme.colors.lightGray};
+    color: ${props => props.theme.colors.text};
     font-size: 1.8rem;
   }
 `
@@ -191,7 +192,7 @@ class App extends Component {
                       {navigation && navigation.map(({title, uri, active}, i) => {
                         const isLast = !(i < navigation.length - 1)
                         return (
-                          <Button link={!isLast} primary={isLast} pl={2} pr={2} ml={2} key={i} route={uri} active={active}>{title}</Button>
+                          <Button link={!isLast} primary={isLast} pl={2} pr={2} ml={2} key={i} to={uri} active={active}>{title}</Button>
                         )
                       })}
                     </NavDesktop>
@@ -232,7 +233,7 @@ class App extends Component {
                 <NavMobileInner>
                   {navigation && navigation.map(({title, uri, active}, i) => {
                     return (
-                      <Button block mb={1} size='xl' link key={i} route={uri} active={active}>{title}</Button>
+                      <Button block mb={1} size='xl' link key={i} to={uri} active={active}>{title}</Button>
                     )
                   })}
                 </NavMobileInner>
