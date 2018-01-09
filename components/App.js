@@ -7,6 +7,7 @@ import gql from 'graphql-tag'
 import Navigation from './Navigation'
 import {Link} from '../routes'
 import Icon from '../elements/Icon'
+import Logo from '../elements/Logo'
 import OffCanvas from '../elements/OffCanvas'
 import Button, {RoundedButton} from '../elements/Button'
 import Wrapper from '../elements/Wrapper'
@@ -74,16 +75,12 @@ const Footer = styled.footer`
   text-align: center;
 `
 const LogoWrapper = styled.a`
-  max-width: 15rem;
+  width: 15rem;
   display: block;
   visibility: ${props => props.isHidden ? 'hidden' : 'visible'};
   ${breakpoint('desktop')`
-    max-width: 20rem;
+    width: 20rem;
   `}
-`
-const Logo = styled.img`
-  width: 100%;
-  display: block;
 `
 const NavWrapper = styled.nav`
   margin-left: auto;
@@ -181,7 +178,7 @@ class App extends Component {
           <HeaderWrapper>
             <Link route={'/'}>
               <LogoWrapper href='/'>
-                <Logo src='/static/logo-metabits.svg' alt='Metabits' />
+                <Logo title='Metabits' />
               </LogoWrapper>
             </Link>
             <NavWrapper>
