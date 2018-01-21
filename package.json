@@ -44,7 +44,8 @@
     "react-markdown": "^3.1.4",
     "react-styled-flexboxgrid": "^2.1.1",
     "styled-components": "^2.1.0",
-    "styled-components-breakpoint": "^1.0.1"
+    "styled-components-breakpoint": "^1.0.1",
+    "styled-genesis": "^0.1.0"
   },
   "license": "ISC",
   "devDependencies": {

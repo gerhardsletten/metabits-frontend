@@ -5,6 +5,7 @@ import {graphql, compose} from 'react-apollo'
 import gql from 'graphql-tag'
 
 import Navigation from './Navigation'
+import MetaFields from './MetaFields'
 import {Link} from '../routes'
 import Icon from '../elements/Icon'
 import Logo from '../elements/Logo'
@@ -13,6 +14,9 @@ import Button, {RoundedButton} from '../elements/Button'
 import Wrapper from '../elements/Wrapper'
 
 const theme = {
+  flexboxgrid: {
+    gutterWidth: 4,
+  },
   shadow: '0 0 6px rgba(0,0,0,.3)',
   sizes: {
     normal: 1.8,
@@ -34,7 +38,7 @@ const theme = {
 
 injectGlobal`
   * {
-    font-family: "Avenir Next", Helvetica, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
     margin: 0;
     padding: 0;
     color: inherit;
@@ -49,8 +53,6 @@ injectGlobal`
     margin: 0;
     padding: 0;
     min-height: 100vh;
-    background: ${props => props.theme.colors.lightGray};
-    color: ${props => props.theme.colors.text};
     font-size: 1.8rem;
   }
 `
@@ -59,6 +61,8 @@ const Main = styled.div`
   min-height: 100vh;
   width: 100%;
   flex-direction: column;
+  background: ${props => props.theme.colors.lightGray};
+  color: ${props => props.theme.colors.text};
 `
 const Content = styled.main`
   padding-bottom: 2rem;
@@ -174,6 +178,7 @@ class App extends Component {
     const {path} = this.props
     return (
       <Header>
+        <MetaFields path={path} />
         <Wrapper>
           <HeaderWrapper>
             <Link route={'/'}>

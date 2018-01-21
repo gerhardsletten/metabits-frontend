@@ -3,14 +3,12 @@ import {Col, Row} from 'react-styled-flexboxgrid'
 import {graphql} from 'react-apollo'
 import gql from 'graphql-tag'
 
-import MetaFields, {fragment as metaFragment} from '../elements/MetaFields'
 import Feature, {fragment as featureFragment} from '../elements/Feature'
 import Title from '../elements/Title'
 
-const Services = ({title, subTitle, services, MetaField}) => {
+const Services = ({title, subTitle, services}) => {
   return (
     <div>
-      <MetaFields title={title} MetaField={MetaField} />
       <Row>
         <Col mdOffset={2} md={8} xs={12}>
           <Title level={1} center mt={1}>{title}</Title>
@@ -38,14 +36,12 @@ const qlQuery = gql`
       id
       title
       subTitle
-      ...MetaFields
     }
     services: allPages(filter: {type: "service"}) {
       ...Feature
     }
   }
   ${featureFragment}
-  ${metaFragment}
 `
 
 export default graphql(qlQuery, {

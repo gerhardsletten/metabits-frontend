@@ -3,16 +3,14 @@ import {Col, Row} from 'react-styled-flexboxgrid'
 import {graphql} from 'react-apollo'
 import gql from 'graphql-tag'
 
-import MetaFields, {fragment as metaFragment} from '../elements/MetaFields'
 import Title from '../elements/Title'
 import Content from '../elements/Content'
 import Icon, {RoundedIcon} from '../elements/Icon'
 import Button from '../elements/Button'
 
-const Service = ({title, subTitle, icon, content, MetaField, parent}) => {
+const Service = ({title, subTitle, icon, content, parent}) => {
   return (
     <div>
-      <MetaFields title={title} MetaField={MetaField} />
       <Row>
         <Col mdOffset={2} md={8} xs={12}>
           <Row center='xs'>
@@ -44,7 +42,6 @@ const pageQuery = gql`
       content
       icon
       id
-      ...MetaFields
     }
     # move to another component
     parent: Page (id: $parentId) {
@@ -52,7 +49,6 @@ const pageQuery = gql`
       id
     }
   }
-  ${metaFragment}
 `
 
 export default graphql(pageQuery, {

@@ -4,5 +4,7 @@ const config = require('./config')
 
 routes.add('services', config.servicePath)
 routes.add('service', `${config.servicePath}/:slug`)
+routes.add('portfolios', config.portfolioPath)
+
 routes.add('page', '/:slug/:childslug?')
 routes.add('index', '/', 'index')

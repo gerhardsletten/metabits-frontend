@@ -1,17 +1,7 @@
 import React from 'react'
 import Head from 'next/head'
+import {graphql} from 'react-apollo'
 import gql from 'graphql-tag'
-
-
-export const fragment = gql`
-  fragment MetaFields on Page {
-    title
-    MetaField {
-      title
-      description
-    }
-  }
-`
 
 const MetaFields = ({title: pageTitle, MetaField}) => {
   const title = (MetaField && MetaField.title) || pageTitle
@@ -26,4 +16,30 @@ const MetaFields = ({title: pageTitle, MetaField}) => {
   )
 }
 
-export default MetaFields
+const qlQuery = gql`
+  query page ($id: ID!) {
+    page: Page (id: $id) {
+      title
+      MetaField {
+        title
+        description
+      }
+    }
+  }
+`
+
+export default graphql(qlQuery, {
+  options: ({path}) => {
+    return {
+      variables: {
+        id: path
+      }
+    }
+  },
+  props: ({data: {page}}) => {
+    return {
+      ...page
+    }
+  }
+})(MetaFields)
+
