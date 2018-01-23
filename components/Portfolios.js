@@ -4,6 +4,7 @@ import {graphql} from 'react-apollo'
 import gql from 'graphql-tag'
 import El from '../elements/Element'
 
+import PageTitle from '../elements/PageTitle'
 import Title from '../elements/Title'
 
 const Image = El.extend`
@@ -32,12 +33,7 @@ const items = [
 const Portfolios = ({title, subTitle}) => {
   return (
     <div>
-      <Row>
-        <Col mdOffset={2} md={8} xs={12}>
-          <Title level={1} center mt={1}>{title}</Title>
-          <Title level={2} center mt={1} mb={4} color='gray'>{subTitle}</Title>
-        </Col>
-      </Row>
+      <PageTitle title={title} subTitle={subTitle} />
       <Row>
         {items.map((item, i) => {
           return (

@@ -11,6 +11,7 @@ export const fragment = gql`
     title
     subTitle
     icon
+    image
   }
 `
 
@@ -40,12 +41,19 @@ const Title = styled.h2`
   font-weight: bold;
   color: ${props => props.theme.colors.text}
 `
+const Image = styled.img`
+  display:block;
+  margin-bottom: 1rem;
+  max-height: 15rem;
+  width: auto;
+`
 
-const Feature = ({id, title, subTitle, icon}) => {
+const Feature = ({id, title, subTitle, icon, image}) => {
   return (
     <BoxWrapper to={id}>
       <IconWrapper>
-        <Icon icon={icon} />
+        {icon && <Icon icon={icon} />}
+        {image && <Image src={image} title={title} />}
       </IconWrapper>
       <Title>{title}</Title>
       <p>{subTitle}</p>
