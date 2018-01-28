@@ -4,11 +4,7 @@ import gql from 'graphql-tag'
 import El from '../elements/Element'
 import Title from './Title'
 
-const Image = El.withComponent('img').extend`
-  width: 100%;
-  height: auto;
-  border: 1px solid ${props => props.theme.colors.border};
-`
+import Image from './Image'
 const Text = El.withComponent('p')
 const Link = El.withComponent('a').extend`
   text-decoration: underline;
@@ -23,7 +19,7 @@ const Link = El.withComponent('a').extend`
 const PortfolioItem = ({title, lead, link, image}) => {
   return (
     <El mb={3}>
-      <Image mb={1} src={image} />
+      <Image mb={1} src={image} fullWidth border />
       <Title level={2} size={2.4} mb={0.5} bold>{title}</Title>
       <Text mb={1}>{lead}</Text>
       <Link href={link} target='_blank'>Gå til nettsted</Link>
