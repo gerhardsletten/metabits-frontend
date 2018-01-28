@@ -1,5 +1,6 @@
 import Document, { Head, Main, NextScript } from 'next/document'
 import { ServerStyleSheet } from 'styled-components'
+import config from '../config'
 
 export default class MyDocument extends Document {
   static getInitialProps ({ renderPage }) {
@@ -14,6 +15,7 @@ export default class MyDocument extends Document {
       <html>
         <Head>
           {this.props.styleTags}
+          <link rel='shortcut icon' href={config.favicon} />
         </Head>
         <body>
           <Main />

@@ -1,6 +1,7 @@
 import React from 'react'
 import Element from './Element'
 import styled from 'styled-components'
+import config from '../config'
 
 const Container = Element.withComponent('div')
 
@@ -23,7 +24,7 @@ const Logo = ({alt, title, ...props}) => {
   return (
     <Container {...props}>
       <LogoWrapper>
-        <ImgLogo src='/static/logo-metabits-plain.svg' alt={alt} title={title} />
+        <ImgLogo src={config.logo} alt={alt} title={title} />
       </LogoWrapper>
     </Container>
   )

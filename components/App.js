@@ -167,7 +167,7 @@ class App extends Component {
           </Content>
           <Footer>
             <Wrapper>
-              <p>Footer as</p>
+              <p>Metabits as © {new Date().getFullYear()}</p>
             </Wrapper>
           </Footer>
           {this.renderOverlay()}

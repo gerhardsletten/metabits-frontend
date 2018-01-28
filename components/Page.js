@@ -7,9 +7,21 @@ import Title from '../elements/Title'
 import Content from '../elements/Content'
 import Icon, {RoundedIcon} from '../elements/Icon'
 import Button from '../elements/Button'
+import El from '../elements/Element'
 import Image from '../elements/Image'
 
-const Page = ({title, subTitle, icon, image, content, parent}) => {
+const Page = ({id, path, loading, title, subTitle, icon, image, content, parent}) => {
+  if (!loading && !id) {
+    return (
+      <El mt={2} mb={2}>
+        <Title level={1}>Siden ble ikke funnet</Title>
+        <Content>
+          <p>Etter det vi vet så finnes det ikke noen side på <strong>{path}</strong></p>
+        </Content>
+        <Button to='/' primary>Tilbake til forsiden</Button>
+      </El>
+    )
+  }
   return (
     <div>
       <Row>
@@ -41,6 +53,7 @@ const Page = ({title, subTitle, icon, image, content, parent}) => {
 const pageQuery = gql`
   query page ($id: ID!, $parentId: ID!) {
     page: Page (id: $id) {
+      id
       title
       subTitle
       content
@@ -65,9 +78,10 @@ export default graphql(pageQuery, {
       }
     }
   },
-  props: ({data: {page, parent}}) => {
+  props: ({data: {page, loading, parent, ...data}}) => {
     return {
       ...page,
+      loading,
       parent
     }
   }

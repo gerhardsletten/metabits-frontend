@@ -35,6 +35,7 @@ const HomePage = ({title, Banner, services}) => {
 const qlQuery = gql`
   query page ($id: ID!) {
     page: Page (id: $id) {
+      id
       title
       ...PageBanner
     }

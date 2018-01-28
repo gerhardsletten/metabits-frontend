@@ -18,12 +18,16 @@ const Wrapper = styled.div`
     margin-left: 2rem;
     margin-bottom: .5rem;
   }
+  & strong {
+    font-weight: bold;
+  }
 `
 
-const Content = ({md}) => {
+const Content = ({md, children}) => {
   return (
     <Wrapper>
-      <ReactMarkdown source={md} />
+      {md && <ReactMarkdown source={md} />}
+      {children}
     </Wrapper>
   )
 }
