@@ -14,6 +14,7 @@ module.exports = {
     if (dev) {
       return config
     }
+    return config
     config.resolve.alias = {
       'react': 'preact-compat/dist/preact-compat',
       'react-dom': 'preact-compat/dist/preact-compat'

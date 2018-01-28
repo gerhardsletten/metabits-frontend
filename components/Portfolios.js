@@ -2,48 +2,19 @@ import React from 'react'
 import {Col, Row} from 'react-styled-flexboxgrid'
 import {graphql} from 'react-apollo'
 import gql from 'graphql-tag'
-import El from '../elements/Element'
 
+import PortfolioItem, {fragment as portfolioFragment} from '../elements/PortfolioItem'
 import PageTitle from '../elements/PageTitle'
-import Title from '../elements/Title'
 
-const Image = El.extend`
-  padding-top: 60%;
-`
-const Text = El.withComponent('p')
-const Link = El.withComponent('a').extend`
-  text-decoration: underline;
-  color: ${props => props.theme.colors.text};
-  &:hover,
-  &:active {
-    color: ${props => props.theme.colors.primary};
-    text-decoration: none;
-  }
-`
-
-const items = [
-  'Ordnett responsive nettsider',
-  'Gyldnedal.no responsivt redesign',
-  'Navnelapper frontend design og utvikling',
-  'Bokkklubben medlems-app',
-  'Ebok-leser for Elevforlaget',
-  'Leseskogen – lesing og aktiviter for barn'
-]
-
-const Portfolios = ({title, subTitle}) => {
+const Portfolios = ({title, subTitle, portfolios}) => {
   return (
     <div>
       <PageTitle title={title} subTitle={subTitle} />
       <Row>
-        {items.map((item, i) => {
+        {portfolios && portfolios.map((item, i) => {
           return (
             <Col sm={6} xs={12} key={i}>
-              <El mb={3}>
-                <Image mb={2} bg={'#333'} />
-                <Title level={2} size={2.4} mb={0.5} bold>{item}</Title>
-                <Text mb={1}>Together with Coinbase we are banking the unbanked with Toshi - a cryptocurrency platform that provides universal access to financial services.</Text>
-                <Link href='#'>Gå til nettsted</Link>
-              </El>
+              <PortfolioItem {...item} />
             </Col>
           )
         })}
@@ -59,7 +30,11 @@ const qlQuery = gql`
       title
       subTitle
     }
+    portfolios: allPages(filter: {type: "portfolio"}) {
+      ...PortfolioItem
+    }
   }
+  ${portfolioFragment}
 `
 
 export default graphql(qlQuery, {
@@ -70,9 +45,10 @@ export default graphql(qlQuery, {
       }
     }
   },
-  props: ({data: {page}}) => {
+  props: ({data: {page, portfolios}}) => {
     return {
-      ...page
+      ...page,
+      portfolios
     }
   }
 })(Portfolios)

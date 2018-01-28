@@ -7,16 +7,18 @@ import Title from '../elements/Title'
 import Content from '../elements/Content'
 import Icon, {RoundedIcon} from '../elements/Icon'
 import Button from '../elements/Button'
+import Image from '../elements/Image'
 
-const Page = ({title, subTitle, icon, content, parent}) => {
+const Page = ({title, subTitle, icon, image, content, parent}) => {
   return (
     <div>
       <Row>
         <Col mdOffset={2} md={8} xs={12}>
-          {icon && (
+          {!!(icon || image) && (
             <Row center='xs'>
               <Col xs={12}>
-                <RoundedIcon icon={icon} mt={2} bg='primary' color='white' size={4} />
+                {icon && <RoundedIcon icon={icon} mt={2} bg='primary' color='white' size={4} />}
+                {image && <Image src={image} mt={2} maxWidth={20} />}
               </Col>
             </Row>
           )}
@@ -43,6 +45,7 @@ const pageQuery = gql`
       subTitle
       content
       icon
+      image
     }
     # move to another component
     parent: Page (id: $parentId) {
