@@ -17,6 +17,7 @@ export default class MyDocument extends Document {
         <Head>
           {this.props.styleTags}
           <link rel='shortcut icon' href={config.favicon} />
+          <meta name='viewport' content='width=device-width' />
         </Head>
         <body>
           <Main />
