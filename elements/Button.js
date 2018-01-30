@@ -55,7 +55,7 @@ const ActionButton = BasicButton.withComponent('button').extend`
 `
 const LinkButton = ActionButton.withComponent('a')
 
-const Button = (rawProps) => {
+const Button = ({prefetch, ...rawProps}) => {
   const props = {
     pt: .75, pb: .75, pl: 1, pr: 1,
     ...rawProps
@@ -67,7 +67,7 @@ const Button = (rawProps) => {
   }
   if (props.to) {
     return (
-      <Link route={props.to}>
+      <Link route={props.to} prefetch={prefetch}>
         <LinkButton href={props.to} {...props} />
       </Link>
     )

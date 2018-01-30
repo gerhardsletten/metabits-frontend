@@ -1,9 +1,9 @@
 import React from 'react'
 import {Link as RouteLink} from '../routes'
 
-const Link = ({to, children, ...rest}) => {
+const Link = ({to, children, prefetch, ...rest}) => {
   return (
-    <RouteLink route={to}>
+    <RouteLink route={to} prefetch={prefetch}>
       <a href={to} {...rest}>{children}</a>
     </RouteLink>
   )

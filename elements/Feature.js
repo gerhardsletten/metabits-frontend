@@ -48,9 +48,9 @@ const Image = styled.img`
   width: auto;
 `
 
-const Feature = ({id, title, subTitle, icon, image}) => {
+const Feature = ({id, title, prefetch, subTitle, icon, image}) => {
   return (
-    <BoxWrapper to={id}>
+    <BoxWrapper to={id} prefetch={prefetch}>
       <IconWrapper>
         {icon && <Icon icon={icon} />}
         {image && <Image src={image} title={title} />}

@@ -1,5 +1,6 @@
 const express = require('express')
 const next = require('next')
+const path = require('path')
 const compression = require('compression')
 const LRUCache = require('lru-cache')
 const proxy = require('http-proxy-middleware')
@@ -14,7 +15,7 @@ const ssrCache = new LRUCache({
 const port = parseInt(process.env.PORT, 10) || 3000
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
-const handler = routes.getRequestHandler(app, renderAndCache)
+const handler = dev ? routes.getRequestHandler(app) : routes.getRequestHandler(app, renderAndCache)
 
 const server = express()
 server.use(compression())
@@ -25,6 +26,9 @@ server.use('/graphql', proxy({
 app.prepare()
 .then(() => {
 
+  server.get('/service-worker.js', (req, res) =>
+    app.serveStatic(req, res, path.resolve('./.next/service-worker.js'))
+  )
   server.use(handler)
   server.listen(port, (err) => {
     if (err) throw err
