@@ -4,7 +4,7 @@ const appConfig = require('./config')
 
 module.exports = {
   webpack: function (config, { dev, isServer }) {
-    if (ANALYZE) {
+    if (ANALYZE && !isServer) {
       const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
       config.plugins.push(new BundleAnalyzerPlugin({
         analyzerMode: 'server',
