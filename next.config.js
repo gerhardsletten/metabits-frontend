@@ -1,6 +1,6 @@
 const { ANALYZE } = process.env
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin')
-const appConfig = require('./config')
+const Uglify = require('uglifyjs-webpack-plugin')
 
 module.exports = {
   webpack: function (config, { dev }) {
@@ -13,34 +13,35 @@ module.exports = {
       }))
     }
 
+    config.plugins = config.plugins.filter(
+      (plugin) => (plugin.constructor.name !== 'UglifyJsPlugin')
+    )
+
+    config.plugins.push(
+      new Uglify()
+    )
+
     if (dev) {
       return config
     }
-
     config.plugins.push(
       new SWPrecacheWebpackPlugin({
-        cacheId: 'my-project-name',
+        cacheId: 'offline-cache',
         verbose: true,
         staticFileGlobsIgnorePatterns: [/\.next\//],
-        navigateFallback: appConfig.pubicUrl + '/',
+        navigateFallback: '/',
+        importScripts: [
+          '/sw-inital-request.js'
+        ],
         runtimeCaching: [
           {
             handler: 'networkFirst',
-            urlPattern: /^https?.*/
+            urlPattern: /^http.*/
           }
         ]
       })
     )
 
-    return config
-
-    /*
-    Todo: Add preact when ready for React 15
-    config.resolve.alias = {
-      'react': 'preact-compat/dist/preact-compat',
-      'react-dom': 'preact-compat/dist/preact-compat'
-    }
-    */
     return config
   }
 }

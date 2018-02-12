@@ -25,9 +25,14 @@ server.use('/graphql', proxy({
 }))
 app.prepare()
 .then(() => {
-
   server.get('/service-worker.js', (req, res) =>
     app.serveStatic(req, res, path.resolve('./.next/service-worker.js'))
+  )
+  server.get('/sw-inital-request.js', (req, res) =>
+    app.serveStatic(req, res, path.resolve('./static/sw-inital-request.js'))
+  )
+  server.get('/manifest.json', (req, res) =>
+    app.serveStatic(req, res, path.resolve('./static/manifest.json'))
   )
   server.use(handler)
   server.listen(port, (err) => {

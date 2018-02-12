@@ -1,0 +1,10 @@
+{
+  "name": "Metabits AS",
+  "short_name": "Metabits",
+  "background_color": "#FFFFFF",
+  "theme_color": "#d31253",
+  "description": "Hjemmeside for Metabits AS",
+  "display": "standalone",
+  "start_url": "../",
+  "icons": []
+}

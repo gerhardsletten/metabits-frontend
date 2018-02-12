@@ -8,14 +8,14 @@ import Navigation from './Navigation'
 import MetaFields from './MetaFields'
 import {Link} from '../routes'
 import Icon from '../elements/Icon'
-import Logo from '../elements/Logo'
+import Logo from '../elements/LogoElement'
 import OffCanvas from '../elements/OffCanvas'
 import Button, {RoundedButton} from '../elements/Button'
 import Wrapper from '../elements/Wrapper'
 
 const theme = {
   flexboxgrid: {
-    gutterWidth: 4,
+    gutterWidth: 4
   },
   shadow: '0 0 6px rgba(0,0,0,.3)',
   sizes: {

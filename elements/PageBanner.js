@@ -20,7 +20,6 @@ export const fragment = gql`
 
 const Banner = styled.div`
   font-size: 2rem;
-  background-image: ${props => props.image ? `url(${props.image})` : 'none'};
   background-size: cover;
   background-position: 50% 50%;
   text-align: center;
@@ -47,7 +46,7 @@ const Subtitle = Title.withComponent('h2').extend`
 
 const PageBanner = ({title, lead, image, linkText, uri}) => {
   return (
-    <Banner image={image}>
+    <Banner style={{backgroundImage: `url(${image})`}}>
       <Wrapper>
         <Title>{title}</Title>
         <Subtitle>{lead}</Subtitle>
