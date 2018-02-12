@@ -13,6 +13,9 @@ module.exports = {
       }))
     }
 
+    if (dev) {
+      return config
+    }
     config.plugins = config.plugins.filter(
       (plugin) => (plugin.constructor.name !== 'UglifyJsPlugin')
     )
@@ -20,10 +23,6 @@ module.exports = {
     config.plugins.push(
       new Uglify()
     )
-
-    if (dev) {
-      return config
-    }
     config.plugins.push(
       new SWPrecacheWebpackPlugin({
         cacheId: 'offline-cache',

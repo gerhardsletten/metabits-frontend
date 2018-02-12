@@ -72,7 +72,6 @@ export default class NextAssets extends Component {
         }
       })
     ]
-    console.log('payload', payload)
     return this.props.children(payload)
   }
 }

@@ -14,7 +14,7 @@ const Services = ({title, subTitle, services}) => {
         <Row>
           {services.map((item, i) => {
             return (
-              <Col key={i} xs={6} sm={6} md={4}>
+              <Col key={i} xs={12} sm={6} md={4}>
                 <Feature {...item} />
               </Col>
             )
