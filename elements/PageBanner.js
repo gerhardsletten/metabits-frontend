@@ -46,7 +46,7 @@ const Subtitle = Title.withComponent('h2').extend`
 
 const PageBanner = ({title, lead, image, linkText, uri}) => {
   return (
-    <Banner style={{backgroundImage: `url(${image})`}}>
+    <Banner style={{backgroundImage: `url( ${image} )`}}>
       <Wrapper>
         <Title>{title}</Title>
         <Subtitle>{lead}</Subtitle>

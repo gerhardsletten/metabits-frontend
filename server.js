@@ -23,6 +23,15 @@ server.use('/graphql', proxy({
   target: config.wpApi,
   changeOrigin: true
 }))
+server.use(`/${config.a3BucketPath}/`, proxy({
+  target: `http://${config.s3BucketHost}/`,
+  changeOrigin: true,
+  pathRewrite: {[`^/${config.a3BucketPath}`]: ''},
+  headers: {
+    'Host': config.s3BucketHost,
+    'Authorization': ''
+  }
+}))
 app.prepare()
 .then(() => {
   server.get('/service-worker.js', (req, res) =>

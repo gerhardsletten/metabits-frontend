@@ -29,6 +29,7 @@ const PortfolioItem = ({title, lead, link, image}) => {
 
 export const fragment = gql`
   fragment PortfolioItem on Page {
+    id
     title
     lead
     link

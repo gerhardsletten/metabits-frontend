@@ -1,6 +1,5 @@
 import {Component} from 'react'
 import PropTypes from 'prop-types'
-import getUrls from 'get-urls'
 
 function getPagePathname (pathname) {
   if (pathname === '/') {
@@ -56,7 +55,14 @@ export default class NextAssets extends Component {
       type: 'script',
       href: `${assetPrefix}/_next/${buildId}/page${pagePathname}`
     }] : []
-    const htmlImages = getUrls(html)
+
+    const htmlImages = html.match(/[^"'\s]+(.png|.jpg|.gif|.jpeg)/gi)
+    const imageList = htmlImages ? htmlImages.map(img => {
+      return {
+        type: 'image',
+        href: img
+      }
+    }) : []
     const payload = [
       ...this.getPreloadDynamicChunks(),
       ...this.getPreloadMainLinks(),
@@ -65,12 +71,7 @@ export default class NextAssets extends Component {
         type: 'script',
         href: `${assetPrefix}/_next/${buildId}/page/_error.js`
       },
-      ...Array.from(htmlImages).map(img => {
-        return {
-          type: 'image',
-          href: img
-        }
-      })
+      ...imageList
     ]
     return this.props.children(payload)
   }

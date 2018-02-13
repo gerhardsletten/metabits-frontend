@@ -6,9 +6,6 @@ import config from '../config'
 const prod = process.env.NODE_ENV === 'production'
 
 const fixAssets = (assets) => assets.filter((item) => {
-  if (item.type === 'image' && !item.href.includes('metabits-static')) {
-    return false
-  }
   return true
 }).map(({href}) => href)
 
@@ -20,7 +17,7 @@ export default class MyDocument extends Document {
     return { ...page, styleTags }
   }
   render () {
-    const {__NEXT_DATA__: {pathname}} = this.props
+    const {__NEXT_DATA__: {props: {asPath: pathname}}} = this.props
     return (
       <html>
         <Head>
@@ -58,7 +55,7 @@ export default class MyDocument extends Document {
               }
             `}} />
           )}
-          {prod && config.tagManager && (
+          {prod && config.enableTracking && config.tagManager && (
             <script dangerouslySetInnerHTML={{__html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
                   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
                   j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=

@@ -31,7 +31,6 @@
     "babel-plugin-styled-components": "^1.5.0",
     "compression": "^1.7.1",
     "express": "^4.16.2",
-    "get-urls": "^7.2.0",
     "graphql": "^0.12.3",
     "graphql-anywhere": "^4.1.1",
     "graphql-tag": "^2.6.1",

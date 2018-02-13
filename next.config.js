@@ -1,6 +1,7 @@
 const { ANALYZE } = process.env
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin')
 const Uglify = require('uglifyjs-webpack-plugin')
+const config = require('./config')
 
 module.exports = {
   webpack: function (config, { dev }) {
@@ -25,7 +26,7 @@ module.exports = {
     )
     config.plugins.push(
       new SWPrecacheWebpackPlugin({
-        cacheId: 'offline-cache',
+        cacheId: 'offline-cache' + config.contentVersion,
         verbose: true,
         staticFileGlobsIgnorePatterns: [/\.next\//],
         navigateFallback: '/',
