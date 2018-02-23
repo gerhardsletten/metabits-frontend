@@ -42,7 +42,7 @@ export default class NextAssets extends Component {
     return usedChunks ? usedChunks.map((chunk) => {
       return {
         type: 'script',
-        href: `${assetPrefix}/_next/${buildId}/webpack/chunks/${chunk}`
+        href: `${assetPrefix}/_next/webpack/chunks/${chunk}`
       }
     }) : []
   }

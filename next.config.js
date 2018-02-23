@@ -15,7 +15,6 @@ module.exports = {
     if (dev) {
       return config
     }
-    return config
     if (!isServer) {
       config.plugins.push(
         new SWPrecacheWebpackPlugin({
