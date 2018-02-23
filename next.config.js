@@ -1,11 +1,9 @@
 const { ANALYZE } = process.env
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin')
-const Uglify = require('uglifyjs-webpack-plugin')
-const config = require('./config')
 
 module.exports = {
-  webpack: function (config, { dev }) {
-    if (ANALYZE) {
+  webpack: function (config, { dev, isServer }) {
+    if (ANALYZE && !isServer) {
       const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
       config.plugins.push(new BundleAnalyzerPlugin({
         analyzerMode: 'server',
@@ -17,31 +15,26 @@ module.exports = {
     if (dev) {
       return config
     }
-    config.plugins = config.plugins.filter(
-      (plugin) => (plugin.constructor.name !== 'UglifyJsPlugin')
-    )
-
-    config.plugins.push(
-      new Uglify()
-    )
-    config.plugins.push(
-      new SWPrecacheWebpackPlugin({
-        cacheId: 'offline-cache' + config.contentVersion,
-        verbose: true,
-        staticFileGlobsIgnorePatterns: [/\.next\//],
-        navigateFallback: '/',
-        importScripts: [
-          '/sw-inital-request.js'
-        ],
-        runtimeCaching: [
-          {
-            handler: 'networkFirst',
-            urlPattern: /^http.*/
-          }
-        ]
-      })
-    )
-
+    return config
+    if (!isServer) {
+      config.plugins.push(
+        new SWPrecacheWebpackPlugin({
+          cacheId: 'offline-cache' + config.contentVersion,
+          verbose: true,
+          staticFileGlobsIgnorePatterns: [/\.next\//],
+          navigateFallback: '/',
+          importScripts: [
+            '/sw-inital-request.js'
+          ],
+          runtimeCaching: [
+            {
+              handler: 'networkFirst',
+              urlPattern: /^http.*/
+            }
+          ]
+        })
+      )
+    }
     return config
   }
 }

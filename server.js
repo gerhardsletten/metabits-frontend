@@ -32,8 +32,7 @@ server.use(`/${config.a3BucketPath}/`, proxy({
     'Authorization': ''
   }
 }))
-app.prepare()
-.then(() => {
+app.prepare().then(() => {
   server.get('/service-worker.js', (req, res) =>
     app.serveStatic(req, res, path.resolve('./.next/service-worker.js'))
   )
