@@ -1,7 +1,11 @@
 const { ANALYZE } = process.env
-const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin')
+const withOffline = require('next-offline')
 
-module.exports = {
+module.exports = withOffline({
+  workboxOpts: {
+    clientsClaim: true,
+    urlPattern: /^https?.*/, handler: 'networkFirst'
+  },
   webpack: function (config, { dev, isServer }) {
     if (ANALYZE && !isServer) {
       const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
@@ -11,30 +15,6 @@ module.exports = {
         openAnalyzer: true
       }))
     }
-
-    if (dev) {
-      return config
-    }
-    return config
-    if (!isServer) {
-      config.plugins.push(
-        new SWPrecacheWebpackPlugin({
-          cacheId: 'offline-cache' + config.contentVersion,
-          verbose: true,
-          staticFileGlobsIgnorePatterns: [/\.next\//],
-          navigateFallback: '/',
-          importScripts: [
-            '/sw-inital-request.js'
-          ],
-          runtimeCaching: [
-            {
-              handler: 'networkFirst',
-              urlPattern: /^http.*/
-            }
-          ]
-        })
-      )
-    }
     return config
   }
-}
+})
