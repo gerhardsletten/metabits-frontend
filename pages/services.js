@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic'
 
 import withData from '../lib/withData'
 import App from '../components/App'
-import Services from '../components/Services'
+const Services = dynamic(import('../components/Services'))
 
 class ServicesComponent extends Component {
   static async getInitialProps ({isServer, asPath}) {

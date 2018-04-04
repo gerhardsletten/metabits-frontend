@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic'
 
 import withData from '../lib/withData'
 import App from '../components/App'
-import Page from '../components/Page'
+const Page = dynamic(import('../components/Page'))
 
 class PageComponent extends Component {
   static async getInitialProps ({isServer, asPath}) {
