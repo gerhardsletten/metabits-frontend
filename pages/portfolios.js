@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic'
 
 import withData from '../lib/withData'
 import App from '../components/App'
-const Portfolios = dynamic(import('../components/Portfolios'))
+import Portfolios from '../components/Portfolios'
 
 class PortfoliosComponent extends Component {
   static async getInitialProps ({isServer, asPath}) {
