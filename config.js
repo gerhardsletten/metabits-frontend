@@ -7,7 +7,8 @@ module.exports = {
   techPath: process.env.TECH_PATH || '/teknologier',
   favicon: '/' + a3BucketPath + '/layout/favicon.ico',
   tagManager: process.env.TAG_MANAGER || 'GTM-5MC8TVT',
-  enableTracking: process.env.ENABLE_TRACKING || false,
+  enableTracking: process.env.ENABLE_TRACKING || true,
+  enableOffline: process.env.ENABLE_OFFLINE || false,
   contentVersion: process.env.CONTENT_VERSION || 'v2',
   s3BucketHost: process.env.S3_BUCKET_HOST || 'metabits-static.s3.eu-central-1.amazonaws.com',
   a3BucketPath

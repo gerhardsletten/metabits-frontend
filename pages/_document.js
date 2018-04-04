@@ -33,7 +33,7 @@ export default class MyDocument extends Document {
               )
             }}
           </NextAssets>
-          {prod && (
+          {prod && config.enableOffline && (
             <script dangerouslySetInnerHTML={{__html: `
               if ('serviceWorker' in navigator) {
                 navigator.serviceWorker
@@ -65,6 +65,10 @@ export default class MyDocument extends Document {
           <link rel='manifest' href='/manifest.json' />
         </Head>
         <body>
+          {prod && config.enableTracking && config.tagManager && (
+            <noscript><iframe src={`https://www.googletagmanager.com/ns.html?id=${config.tagManager}`}
+height='0' width='0' style={{display:'none',visibility:'hidden'}}></iframe></noscript>
+          )}
           <Main />
           <NextScript />
         </body>
