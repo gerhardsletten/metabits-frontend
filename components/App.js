@@ -1,8 +1,6 @@
 import React, {Component} from 'react'
 import styled, {injectGlobal, ThemeProvider} from 'styled-components'
 import breakpoint from 'styled-components-breakpoint'
-import {graphql, compose} from 'react-apollo'
-import gql from 'graphql-tag'
 
 import Navigation from './Navigation'
 import MetaFields from './MetaFields'
@@ -122,30 +120,22 @@ const NavMobileInner = styled.div`
 `
 
 class App extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      menuVisible: false
+    }
+  }
   toggleBtn (icon = 'bars') {
-    const {menuVisible} = this.props
+    const {menuVisible} = this.state
     return (
       <RoundedButton tight primary onClick={this.toggleMenu} active={menuVisible}><Icon icon={icon} /></RoundedButton>
     )
   }
   toggleMenu = () => {
-    const {menuVisible, toggleMenu} = this.props
-    toggleMenu(!menuVisible)
-  }
-  toggleDropdown = () => {
-    const {dropdownVisible, toggleDropdown} = this.props
-    toggleDropdown(!dropdownVisible)
-  }
-  componentWillMount (props) {
-    const {menuVisible, toggleMenu} = this.props
-    if (menuVisible) {
-      toggleMenu(false)
-    }
-  }
-  componentWillReceiveProps (nextProps) {
-    if (this.props.path !== nextProps.path && nextProps.menuVisible) {
-      nextProps.toggleMenu(false)
-    }
+    this.setState({
+      menuVisible: !this.state.menuVisible
+    })
   }
   renderContent () {
     const {inset = true, children} = this.props
@@ -213,7 +203,8 @@ class App extends Component {
     )
   }
   renderOverlay () {
-    const {path, menuVisible} = this.props
+    const {path} = this.props
+    const {menuVisible} = this.state
     return (
       <OffCanvas visible={menuVisible}>
         <Header>
@@ -250,47 +241,4 @@ class App extends Component {
   }
 }
 
-const menuMutation = gql`
-  mutation updateMenuStatus($menuVisible: Boolean) {
-    updateMenuStatus(menuVisible: $menuVisible) @client
-  }
-`
-
-const dropdownMutation = gql`
-  mutation updateDropdownToggle($dropdownVisible: Boolean) {
-    updateDropdownToggle(dropdownVisible: $dropdownVisible) @client
-  }
-`
-
-const qlQuery = gql`
-  query {
-    uiState @client {
-      menuVisible
-      dropdownVisible
-    }
-  }
-`
-
-export default compose(
-  graphql(qlQuery, {
-    props: ({ data: {uiState} }) => {
-      return {
-        ...uiState
-      }
-    }
-  }),
-  graphql(menuMutation, {
-    props: ({ mutate }) => {
-      return {
-        toggleMenu: menuVisible => mutate({ variables: { menuVisible } })
-      }
-    }
-  }),
-  graphql(dropdownMutation, {
-    props: ({ mutate }) => {
-      return {
-        toggleDropdown: dropdownVisible => mutate({ variables: { dropdownVisible } })
-      }
-    }
-  })
-)(App)
+export default App
