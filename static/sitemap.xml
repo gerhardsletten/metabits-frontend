@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<url>
+  <loc>https://www.metabits.no/</loc>
+  <lastmod>2018-04-08T09:23:06+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+<url>
+  <loc>https://www.metabits.no/tjenester</loc>
+  <lastmod>2018-04-08T09:23:06+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.metabits.no/referanser</loc>
+  <lastmod>2018-04-08T09:23:06+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.metabits.no/teknologier</loc>
+  <lastmod>2018-04-08T09:23:06+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.metabits.no/kontakt-oss</loc>
+  <lastmod>2018-04-08T09:23:06+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.metabits.no/tjenester/design-og-usability</loc>
+  <lastmod>2018-04-08T09:23:06+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.metabits.no/tjenester/ios-applikasjoner</loc>
+  <lastmod>2018-04-08T09:23:06+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.metabits.no/tjenester/webbasert-programvare</loc>
+  <lastmod>2018-04-08T09:23:06+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.metabits.no/tjenester/mobile-nettsider</loc>
+  <lastmod>2018-04-08T09:23:06+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.metabits.no/tjenester/utvikling-av-nettsider</loc>
+  <lastmod>2018-04-08T09:23:06+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.metabits.no/tjenester/konsulent-oppdrag</loc>
+  <lastmod>2018-04-08T09:23:06+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.metabits.no/teknologier/node-js</loc>
+  <lastmod>2018-04-08T09:23:06+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.metabits.no/teknologier/react-js</loc>
+  <lastmod>2018-04-08T09:23:06+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.metabits.no/teknologier/wordpress</loc>
+  <lastmod>2018-04-08T09:23:06+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+
+
+</urlset>
