@@ -1,5 +1,4 @@
 const { ANALYZE } = process.env
-const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin')
 
 module.exports = {
   webpack: function (config, { dev, isServer }) {
@@ -14,25 +13,6 @@ module.exports = {
 
     if (dev) {
       return config
-    }
-    if (!isServer) {
-      config.plugins.push(
-        new SWPrecacheWebpackPlugin({
-          cacheId: 'offline-cache' + config.contentVersion,
-          verbose: true,
-          staticFileGlobsIgnorePatterns: [/\.next\//],
-          navigateFallback: '/',
-          importScripts: [
-            '/sw-inital-request.js'
-          ],
-          runtimeCaching: [
-            {
-              handler: 'networkFirst',
-              urlPattern: /^http.*/
-            }
-          ]
-        })
-      )
     }
     return config
   }

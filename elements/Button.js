@@ -38,7 +38,7 @@ const BasicButton = Element.withComponent('button').extend`
   display: ${props => props.block ? 'flex' : 'inline-flex'};
   align-items: center;
   justify-content: center;
-  border-radius: 3px;
+  border-radius: ${(props) => props.rounded ? '50%' : '3px'};
   outline: none;
   box-shadow: ${props => props.shadow ? props.theme.shadow : 'none'};
   color: ${props => buttonColor(props)};
@@ -77,12 +77,13 @@ const Button = ({prefetch, ...rawProps}) => {
   )
 }
 
-export const RoundedButton = styled(Button)`
+const RoundedButtonRaw = styled(Button)`
   border-radius: 50%;
   padding-left: 0;
   padding-right: 0;
   min-width: 4rem;
   min-height: 4rem;
 `
+export const RoundedButton = (props) => (<RoundedButtonRaw rounded {...props} />)
 
 export default Button

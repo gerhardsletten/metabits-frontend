@@ -31,7 +31,7 @@ export default class NextAssets extends Component {
       ]
     }
     return [
-      this.getChunkPreloadLink('app.js')
+      this.getChunkPreloadLink('main.js')
     ]
   }
 

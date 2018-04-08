@@ -48,8 +48,7 @@
     "react-styled-flexboxgrid": "^2.2.0",
     "styled-components": "^3.2.5",
     "styled-components-breakpoint": "^2.0.2",
-    "styled-genesis": "^0.1.10",
-    "sw-precache-webpack-plugin": "^0.11.5"
+    "styled-genesis": "^0.1.10"
   },
   "license": "ISC",
   "devDependencies": {

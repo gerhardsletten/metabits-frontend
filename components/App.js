@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import styled, {injectGlobal, ThemeProvider} from 'styled-components'
 import breakpoint from 'styled-components-breakpoint'
+import Router from 'next/router'
 
 import Navigation from './Navigation'
 import MetaFields from './MetaFields'
@@ -10,6 +11,7 @@ import Logo from '../elements/LogoElement'
 import OffCanvas from '../elements/OffCanvas'
 import Button, {RoundedButton} from '../elements/Button'
 import Wrapper from '../elements/Wrapper'
+import config from '../config'
 
 const theme = {
   flexboxgrid: {
@@ -119,6 +121,17 @@ const NavMobileInner = styled.div`
   width: 100%;
 `
 
+const prod = process.env.NODE_ENV === 'production'
+
+if (process.browser && prod && config.enableOffline) {
+  if ('serviceWorker' in navigator) {
+    Router.onRouteChangeComplete = url => {
+      navigator.serviceWorker.controller.postMessage({
+        assets: [url]
+      })
+    }
+  }
+}
 class App extends Component {
   constructor (props) {
     super(props)

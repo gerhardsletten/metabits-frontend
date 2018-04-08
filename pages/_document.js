@@ -36,21 +36,23 @@ export default class MyDocument extends Document {
           {prod && config.enableOffline && (
             <script dangerouslySetInnerHTML={{__html: `
               if ('serviceWorker' in navigator) {
-                navigator.serviceWorker
-                .register('/service-worker.js')
-                .then(registration => {
-                  return new Promise(resolve => {
-                    if (navigator.serviceWorker.controller) return resolve()
-                    navigator.serviceWorker.addEventListener('controllerchange', e => resolve())
+                window.addEventListener('load', () => {
+                  navigator.serviceWorker
+                  .register('/sw.js')
+                  .then(registration => {
+                    return new Promise(resolve => {
+                      if (navigator.serviceWorker.controller) return resolve()
+                      navigator.serviceWorker.addEventListener('controllerchange', e => resolve())
+                    })
                   })
-                })
-                .then(() => {
-                  navigator.serviceWorker.controller.postMessage({
-                    assets: window.INITAL_CACHE
+                  .then(() => {
+                    navigator.serviceWorker.controller.postMessage({
+                      assets: window.INITAL_CACHE
+                    })
                   })
-                })
-                .catch(err => {
-                  console.warn('service worker registration failed', err.message)
+                  .catch(err => {
+                    console.warn('service worker registration failed', err.message)
+                  })
                 })
               }
             `}} />
